@@ -6,7 +6,7 @@ Ook wordt er gebruik gemaakt van het Linear Regression algoritme om voorspelling
 Het 'test.py' bestand bevat de geschreven code en comments waarin de gemaakte stappen worden toegelicht.
 Onderstaande afbeeldingen geeft een aantal waardes weer. Het eerste getal is de voorspelde waarde, het laatste getal de daadwerkelijke waarde gebaseerd op de tussenliggende waardes.
 
-![Capture](tensorDemo/Capture.JPG "Console result")
+![Capture](https://github.com/daanbakker1995/studieSuccesVoorspellerAI/blob/master/tensorDemo/Capture.JPG?raw=true "Console result")
 
 *Figuur 1 - Console result*
 

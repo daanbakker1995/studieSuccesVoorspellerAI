@@ -8,4 +8,4 @@ Het [test.py](test.py) bestand bevat de geschreven code met comments waarin de g
 
 De [student-mat.csv](student-mat.csv) bestand bevat de trainingsdata die gebruikt wordt om het model te trainen. Uit dit bestand worden een aantal kolommen zoals studytime, absences, failures, G1, G2 gebruikt om aan de hand daar van het verwachte cijfer G3 te voorspellen. 
 
-Het bestand [test-data.csv](test-data.csv) bestaat uit 6 records waarvan het verwachte cijfer voorspeld wordt.
+Het bestand [test_data.csv](test_data.csv) bestaat uit 6 records waarvan het verwachte cijfer voorspeld wordt.

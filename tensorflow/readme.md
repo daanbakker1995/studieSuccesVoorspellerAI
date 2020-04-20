@@ -6,7 +6,7 @@ Uit het literatuuronderzoek is geconcludeerd dat het team voornamelijk gebruik z
 Dit algoritme wordt gebruikt om op basis van onafhankelijke variabelen (input) een afhankelijke variabele (output) te voorspellen. In de bijgesloten [dataset](student-mat.csv) zal het gaan om 'G3' (grade 3).
 
 ### Installatie
-Om de demo uit te voeren worden eerst onderstaande packages geinstalleerd:
+Om de demo uit te voeren worden eerst onderstaande packages geïnstalleerd:
 * Pip (package installer, inbegrepen in Python)<sup>2</sup>
 * Tensorflow (framework)<sup>3</sup>
 * Pandas (voor gebruik van dataframe)<sup>4</sup>

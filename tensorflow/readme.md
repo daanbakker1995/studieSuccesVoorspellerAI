@@ -73,6 +73,6 @@ result = linear_est.evaluate(eval_input_fn)
 <sup>1</sup> https://towardsdatascience.com/linear-regression-detailed-view-ea73175f6e86 <br>
 <sup>2</sup> https://pypi.org/project/pip/ <br>
 <sup>3</sup> https://www.tensorflow.org/install/pip <br>
-<sup>4</sup> https://pypi.org/project/pandas/
-<sup>5</sup> https://www.tensorflow.org/tutorials/structured_data/feature_columns
+<sup>4</sup> https://pypi.org/project/pandas/ <br>
+<sup>5</sup> https://www.tensorflow.org/tutorials/structured_data/feature_columns <br>
 <sup>6</sup> https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator

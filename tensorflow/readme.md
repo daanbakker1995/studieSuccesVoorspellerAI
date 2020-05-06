@@ -10,6 +10,7 @@ Om de demo uit te voeren worden eerst onderstaande packages geïnstalleerd:
 * Pip (package installer, inbegrepen in Python)<sup>2</sup>
 * Tensorflow (framework)<sup>3</sup>
 * Pandas (voor gebruik van dataframe)<sup>4</sup>
+* Sklearn (pip install sklearn)
 
 Ten slotte kan het project geopend worden in een IDE naar wens.
 

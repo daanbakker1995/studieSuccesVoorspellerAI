@@ -14,11 +14,12 @@ train_column = training_set.pop('GemToetsCijferEerstePeriode')
 eval_column = eval_set.pop('GemToetsCijferEerstePeriode')
 
 # set catogorical columns
-CATEGORICAL_COLUMNS = ["pcp_Regio", "isc_OpleidingsCode", "Geslacht", "PCertificaat_Opl", "VoorOpleidingsNiveau"]
+CATEGORICAL_COLUMNS = ["pcp_Regio", "Geslacht", "isc_VanDatum", "isc_OpleidingsCode","PropCertificaatDatum","PCertificaat_Opl", "VoorOpleidingsNiveau"]
 # set numeric columns
-NUMERIC_COLUMNS = ["prs_PersoonsID", "AfstandSchool", "isc_VanDatum", "LeeftijdMaandenEersteInschr",
-                   "NrStdInEersteKlas", "AantalOplVOORICAIngeschreven", "PropCertificaatDatum", "HeeftP",
-                   "Aanwezigheid1ejaar", "EersteToetsCijfer"]
+NUMERIC_COLUMNS = ["prs_PersoonsID", "AfstandSchool","LeeftijdMaandenEersteInschr","NrStdInEersteKlas","AantalOplVOORICAIngeschreven","HeeftP","EersteToetsCijfer"]
+
+print(training_set)
+print(eval_set)
 
 feature_columns = []
 for feature_name in CATEGORICAL_COLUMNS:
@@ -43,17 +44,23 @@ def make_input_fn(data_df, label_df, num_epochs=10, shuffle=True, batch_size=32)
 train_input_fn = make_input_fn(training_set, train_column)
 eval_input_fn = make_input_fn(eval_set, eval_column, num_epochs=1, shuffle=False)
 
-linear_est = tf.estimator.LinearClassifier(feature_columns=feature_columns)
-
-linear_est.train(train_input_fn)
-result = linear_est.evaluate(eval_input_fn)
-
-print(result['accuracy'])
-result = list(linear_est.predict(eval_input_fn))
-print(eval_set.loc[0])
-print("Evaluation Column: ", eval_column.loc[0])
-print("Prediction", result[0])
+# linear_est = tf.estimator.LinearClassifier(feature_columns=feature_columns)
 #
-# print(eval_set.loc[5])
-# print("Survived: ", eval_column.loc[5])
-# print("Survival prediction", result[5]['probabilities'][1])
+# linear_est.train(train_input_fn)
+# result = linear_est.evaluate(eval_input_fn)
+#
+# print(result['accuracy'])
+# result = list(linear_est.predict(eval_input_fn))
+# print(eval_set.loc[0])
+# print("Evaluation Column: ", eval_column.loc[0])
+# print("Prediction", result[0])
+
+# train linear regression model to predict label value based on feature values
+linear_est = tf.estimator.LinearRegressor(feature_columns=feature_columns)
+
+linear_est.train(train_input_fn)  # training..
+result = linear_est.evaluate(eval_input_fn)  # result with predictions
+
+eval_set['GemToetsCijferEerstePeriode'] = eval_column
+eval_set['prediction'] = list(linear_est.predict(eval_input_fn))
+print(eval_set[:10])

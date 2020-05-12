@@ -2,21 +2,21 @@ import tensorflow as tf
 import pandas as pd
 
 # Datafile
-RAW_DATA = "studentsZonderNull.csv"
+RAW_DATA = "data.csv"
 # Read csv file
-raw_data = pd.read_csv(RAW_DATA, sep=";")
+raw_data = pd.read_csv(RAW_DATA, sep=",")
 # use 80% of data as training dataframe
 training_set = raw_data.sample(frac=0.8, random_state=0)
 # use remaining data as evaluation (testing) dataframe
 eval_set = raw_data.drop(training_set.index)
 
-train_column = training_set.pop('GemToetsCijferEerstePeriode')
-eval_column = eval_set.pop('GemToetsCijferEerstePeriode')
+train_column = training_set.pop('HeeftP')
+eval_column = eval_set.pop('HeeftP')
 
 # set catogorical columns
 CATEGORICAL_COLUMNS = ["pcp_Regio", "Geslacht", "isc_VanDatum", "isc_OpleidingsCode","PropCertificaatDatum","PCertificaat_Opl", "VoorOpleidingsNiveau"]
 # set numeric columns
-NUMERIC_COLUMNS = ["prs_PersoonsID", "AfstandSchool","LeeftijdMaandenEersteInschr","NrStdInEersteKlas","AantalOplVOORICAIngeschreven","HeeftP","EersteToetsCijfer"]
+NUMERIC_COLUMNS = ["prs_PersoonsID", "AfstandSchool","LeeftijdMaandenEersteInschr","NrStdInEersteKlas","AantalOplVOORICAIngeschreven","GemToetsCijferEerstePeriode","EersteToetsCijfer"]
 
 print(training_set)
 print(eval_set)
@@ -44,23 +44,29 @@ def make_input_fn(data_df, label_df, num_epochs=10, shuffle=True, batch_size=32)
 train_input_fn = make_input_fn(training_set, train_column)
 eval_input_fn = make_input_fn(eval_set, eval_column, num_epochs=1, shuffle=False)
 
-# linear_est = tf.estimator.LinearClassifier(feature_columns=feature_columns)
+linear_est = tf.estimator.LinearClassifier(feature_columns=feature_columns)
+
+linear_est.train(train_input_fn)
+result = linear_est.evaluate(eval_input_fn)
+
+print(result['accuracy'])
+result = list(linear_est.predict(eval_input_fn))
+print(eval_set)
+
+print(eval_set.loc[0])
+print("Real result:", eval_column.loc[0])
+print("Prediction", result[0]['probabilities'][1])
+
+print(eval_set.loc[26])
+print("Real result:", eval_column.loc[26])
+print("Prediction", result[26]['probabilities'][1])
+
+# # train linear regression model to predict label value based on feature values
+# linear_est = tf.estimator.LinearRegressor(feature_columns=feature_columns)
 #
-# linear_est.train(train_input_fn)
-# result = linear_est.evaluate(eval_input_fn)
+# linear_est.train(train_input_fn)  # training..
+# result = linear_est.evaluate(eval_input_fn)  # result with predictions
 #
-# print(result['accuracy'])
-# result = list(linear_est.predict(eval_input_fn))
-# print(eval_set.loc[0])
-# print("Evaluation Column: ", eval_column.loc[0])
-# print("Prediction", result[0])
-
-# train linear regression model to predict label value based on feature values
-linear_est = tf.estimator.LinearRegressor(feature_columns=feature_columns)
-
-linear_est.train(train_input_fn)  # training..
-result = linear_est.evaluate(eval_input_fn)  # result with predictions
-
-eval_set['GemToetsCijferEerstePeriode'] = eval_column
-eval_set['prediction'] = list(linear_est.predict(eval_input_fn))
-print(eval_set[:10])
+# eval_set['GemToetsCijferEerstePeriode'] = eval_column
+# eval_set['prediction'] = list(linear_est.predict(eval_input_fn))
+# print(eval_set[:10])

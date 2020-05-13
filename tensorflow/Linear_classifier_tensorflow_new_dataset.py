@@ -14,12 +14,11 @@ train_column = training_set.pop('HeeftP')
 eval_column = eval_set.pop('HeeftP')
 
 # set catogorical columns
-CATEGORICAL_COLUMNS = ["pcp_Regio", "Geslacht", "isc_VanDatum", "isc_OpleidingsCode","PropCertificaatDatum","PCertificaat_Opl", "VoorOpleidingsNiveau"]
+# CATEGORICAL_COLUMNS = ["pcp_Regio", "Geslacht", "isc_VanDatum", "isc_OpleidingsCode","PropCertificaatDatum","PCertificaat_Opl", "VoorOpleidingsNiveau"]
+CATEGORICAL_COLUMNS = []
 # set numeric columns
-NUMERIC_COLUMNS = ["prs_PersoonsID", "AfstandSchool","LeeftijdMaandenEersteInschr","NrStdInEersteKlas","AantalOplVOORICAIngeschreven","GemToetsCijferEerstePeriode","EersteToetsCijfer"]
-
-print(training_set)
-print(eval_set)
+# NUMERIC_COLUMNS = ["AfstandSchool","LeeftijdMaandenEersteInschr","NrStdInEersteKlas","AantalOplVOORICAIngeschreven","GemToetsCijferEerstePeriode","EersteToetsCijfer"]
+NUMERIC_COLUMNS = ["GemToetsCijferEerstePeriode","EersteToetsCijfer"]
 
 feature_columns = []
 for feature_name in CATEGORICAL_COLUMNS:
@@ -53,20 +52,16 @@ print(result['accuracy'])
 result = list(linear_est.predict(eval_input_fn))
 print(eval_set)
 
-print(eval_set.loc[0])
+# print(eval_set.loc[0])
 print("Real result:", eval_column.loc[0])
 print("Prediction", result[0]['probabilities'][1])
 
-print(eval_set.loc[26])
+# print(eval_set.loc[26])
 print("Real result:", eval_column.loc[26])
 print("Prediction", result[26]['probabilities'][1])
 
-# # train linear regression model to predict label value based on feature values
-# linear_est = tf.estimator.LinearRegressor(feature_columns=feature_columns)
-#
-# linear_est.train(train_input_fn)  # training..
-# result = linear_est.evaluate(eval_input_fn)  # result with predictions
-#
-# eval_set['GemToetsCijferEerstePeriode'] = eval_column
-# eval_set['prediction'] = list(linear_est.predict(eval_input_fn))
-# print(eval_set[:10])
+print("Real result:", eval_column.loc[21])
+print("Prediction", result[21]['probabilities'][1])
+
+print("Real result:", eval_column.loc[46])
+print("Prediction", result[46]['probabilities'][1])

@@ -12,7 +12,6 @@
         }
 
         table {
-            table-layout: fixed;
             width: 100%;
         }
 
@@ -53,26 +52,29 @@
     </thead>
     <tbody>
     <tr>
-        <td>POST</td>
+        <td>GET</td>
         <td>/api/v1/prediction</td>
+        <td>?id={INT_ID_OF_THE_STUDENT}</td>
         <td>-</td>
         <td>
             application/json
             <br>
             <br>
             <pre>
+On success (200),
+the response JSON will contain
+an integer which stands for the
+success percentage of the student:
+
 {
-    ...
+    "prediction": {SUCCESS_PERCENTAGE}
 }
-            </pre>
-        </td>
-        <td>
-            application/json
-            <br>
-            <br>
-            <pre>
+
+On an error (3**, 4**, 5**), the response
+JSON will contain an error message:
+
 {
-    ...
+    "error": "{ERROR MESSAGE}"
 }
             </pre>
         </td>

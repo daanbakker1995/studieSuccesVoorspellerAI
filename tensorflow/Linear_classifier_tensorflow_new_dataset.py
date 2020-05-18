@@ -14,11 +14,11 @@ train_column = training_set.pop('HeeftP')
 eval_column = eval_set.pop('HeeftP')
 
 # set catogorical columns
-# CATEGORICAL_COLUMNS = ["pcp_Regio", "Geslacht", "isc_VanDatum", "isc_OpleidingsCode","PropCertificaatDatum","PCertificaat_Opl", "VoorOpleidingsNiveau"]
-CATEGORICAL_COLUMNS = []
+CATEGORICAL_COLUMNS = ["pcp_Regio", "Geslacht", "isc_VanDatum", "isc_OpleidingsCode", "VoorOpleidingsNiveau"]
+# CATEGORICAL_COLUMNS = []
 # set numeric columns
-# NUMERIC_COLUMNS = ["AfstandSchool","LeeftijdMaandenEersteInschr","NrStdInEersteKlas","AantalOplVOORICAIngeschreven","GemToetsCijferEerstePeriode","EersteToetsCijfer"]
-NUMERIC_COLUMNS = ["GemToetsCijferEerstePeriode","EersteToetsCijfer"]
+NUMERIC_COLUMNS = ["AfstandSchool","LeeftijdMaandenEersteInschr","NrStdInEersteKlas","AantalOplVOORICAIngeschreven", "Aanwezigheid1ejaar","GemToetsCijferEerstePeriode","EersteToetsCijfer"]
+# NUMERIC_COLUMNS = ["Aanwezigheid1ejaar", "EersteToetsCijfer", "GemToetsCijferEerstePeriode"]
 
 feature_columns = []
 for feature_name in CATEGORICAL_COLUMNS:
@@ -50,18 +50,14 @@ result = linear_est.evaluate(eval_input_fn)
 
 print(result['accuracy'])
 result = list(linear_est.predict(eval_input_fn))
-print(eval_set)
+print(eval_set.loc[94]["prs_PersoonsID"])
+print("Real result:", eval_column.loc[94])
+print("Prediction", result[94]['probabilities'][1])
 
-# print(eval_set.loc[0])
-print("Real result:", eval_column.loc[0])
-print("Prediction", result[0]['probabilities'][1])
+print(eval_set.loc[86]["prs_PersoonsID"])
+print("Real result:", eval_column.loc[86])
+print("Prediction", result[86]['probabilities'][1])
 
-# print(eval_set.loc[26])
-print("Real result:", eval_column.loc[26])
-print("Prediction", result[26]['probabilities'][1])
-
-print("Real result:", eval_column.loc[21])
-print("Prediction", result[21]['probabilities'][1])
-
-print("Real result:", eval_column.loc[46])
-print("Prediction", result[46]['probabilities'][1])
+print(eval_set.loc[164]["prs_PersoonsID"])
+print("Real result:", eval_column.loc[164])
+print("Prediction", result[164]['probabilities'][1])

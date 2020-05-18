@@ -3,6 +3,8 @@ from flask import render_template
 from flask import request
 
 # Initialize a Flask app.
+from ai.linear_regression_tensorflow import get_ai_results
+
 app = Flask(__name__)
 
 
@@ -39,7 +41,7 @@ def create_task():
 
     # TODO: Link TensorFlow with the Flask API.
     # student_id = int(query_param_id)
-    success_percentage = 38
+    success_percentage = get_ai_results()
 
     return {"prediction": success_percentage}
 

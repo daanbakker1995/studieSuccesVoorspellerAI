@@ -64,4 +64,4 @@ def get_ai_results():
     dfeval['prediction'] = list(linear_est.predict(eval_input_fn))
     print(dfeval)
 
-    return result
+    return str(result)

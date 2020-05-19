@@ -43,7 +43,7 @@ def create_task():
     # student_id = int(query_param_id)
     success_percentage = get_ai_results()
 
-    return {"prediction": success_percentage}
+    return success_percentage
 
 
 # Run the app in debug mode if the Python interpreter runs

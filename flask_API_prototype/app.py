@@ -39,11 +39,13 @@ def create_task():
     if int(query_param_id) < 0:
         return {"error": "Query parameter 'id' must be a positive number."}, 400
 
-    # TODO: Link TensorFlow with the Flask API.
-    # student_id = int(query_param_id)
-    success_percentage = get_ai_results()
+    student_id = int(query_param_id)
+    success_percentage = get_ai_results(student_id)
 
-    return success_percentage
+    if success_percentage is None:
+        return {"error": "Student was not found."}, 404
+    else:
+        return success_percentage
 
 
 # Run the app in debug mode if the Python interpreter runs

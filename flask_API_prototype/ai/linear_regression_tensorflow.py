@@ -4,7 +4,7 @@ import tensorflow as tf
 
 
 # Read csv file and only use columns on given indexes
-def get_ai_results():
+def get_ai_results(student_id):
     raw_data = pd.read_csv("./ai/student-mat.csv", sep=";")
     raw_data = raw_data[
         ["school", "sex", "age", "Mjob", "Fjob", "traveltime",

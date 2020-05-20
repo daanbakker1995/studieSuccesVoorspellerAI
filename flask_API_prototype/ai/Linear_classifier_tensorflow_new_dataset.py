@@ -66,7 +66,7 @@ def get_ai_results(student_id):
     print("Real result:", eval_column.loc[46])
     print("Prediction", result[46]['probabilities'][1])
 
-    if student_id in result:
+    if 0 <= student_id < len(result):
         return str(result[student_id]['probabilities'][1])
     else:
         return None

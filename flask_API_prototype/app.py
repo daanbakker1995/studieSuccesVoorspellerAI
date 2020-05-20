@@ -45,7 +45,7 @@ def create_task():
     if success_percentage is None:
         return {"error": "Student was not found."}, 404
     else:
-        return success_percentage
+        return {"percentage": success_percentage}
 
 
 # Run the app in debug mode if the Python interpreter runs

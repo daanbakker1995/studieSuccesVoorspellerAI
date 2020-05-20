@@ -4,7 +4,7 @@ import pandas as pd
 
 def get_ai_results(student_id):
     # Datafile
-    RAW_DATA = "data.csv"
+    RAW_DATA = "./ai/data.csv"
     # Read csv file
     raw_data = pd.read_csv(RAW_DATA, sep=",")
     # use 80% of data as training dataframe

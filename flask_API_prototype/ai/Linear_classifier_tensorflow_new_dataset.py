@@ -69,4 +69,4 @@ def get_ai_results(student_id):
     if result[student_id] is False:
         return None
     else:
-        return result[student_id]['probabilities'][1]
+        return str(result[student_id]['probabilities'][1])

@@ -17,8 +17,10 @@ eval_column = eval_set.pop('HeeftP')
 CATEGORICAL_COLUMNS = ["pcp_Regio", "Geslacht", "isc_VanDatum", "isc_OpleidingsCode", "VoorOpleidingsNiveau"]
 # CATEGORICAL_COLUMNS = []
 # set numeric columns
-NUMERIC_COLUMNS = ["AfstandSchool","LeeftijdMaandenEersteInschr","NrStdInEersteKlas","AantalOplVOORICAIngeschreven", "Aanwezigheid1ejaar","GemToetsCijferEerstePeriode","EersteToetsCijfer"]
-# NUMERIC_COLUMNS = ["Aanwezigheid1ejaar", "EersteToetsCijfer", "GemToetsCijferEerstePeriode"]
+NUMERIC_COLUMNS = ["AfstandSchool","LeeftijdMaandenEersteInschr",
+                   "NrStdInEersteKlas", "AantalOplVOORICAIngeschreven", "Aanwezigheid1ejaar",
+                   "GemToetsCijferEerstePeriode","EersteToetsCijfer"]
+# NUMERIC_COLUMNS = []
 
 feature_columns = []
 for feature_name in CATEGORICAL_COLUMNS:
@@ -61,3 +63,7 @@ print("Prediction", result[86]['probabilities'][1])
 print(eval_set.loc[164]["prs_PersoonsID"])
 print("Real result:", eval_column.loc[164])
 print("Prediction", result[164]['probabilities'][1])
+
+print(eval_set.loc[99]["prs_PersoonsID"])
+print("Real result:", eval_column.loc[99])
+print("Prediction", result[99]['probabilities'][1])

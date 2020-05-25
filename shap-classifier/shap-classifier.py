@@ -7,45 +7,44 @@ from sklearn.model_selection import train_test_split
 import shap
 
 label_encoder = LabelEncoder()
-# CATEGORICAL_COLUMNS = ['sex', 'class', 'deck', 'embark_town', 'alone']
-CATEGORICAL_COLUMNS = ['sex', 'class']
+CATEGORICAL_COLUMNS = ['sex', 'class', 'deck', 'embark_town', 'alone']
 NUMERIC_COLUMNS = ['age', 'n_siblings_spouses', 'parch', 'fare']
 
 df = pd.read_csv('https://storage.googleapis.com/tf-datasets/titanic/train.csv')
 properties = list(df.columns.values)
-print(properties)
 properties.remove('survived')
-
-# Temporarily remove categorical columns
-# properties.remove('sex')
-# properties.remove('class')
-properties.remove('deck')
-properties.remove('embark_town')
-properties.remove('alone')
+print(properties)
+print(df)
 
 
 def transform_fn(label):
-    code = np.array(df[label])
-    vec = label_encoder.fit_transform(code)
-    tf.keras.utils.to_categorical(vec)
-    df[label] = vec
+    print(label, ": \n", df[label][:10])
+    vec = label_encoder.fit_transform(df[label])
+    print(label, ": \n", vec[:10])
+    df_num = pd.DataFrame(vec)
+    print(label, ": \n", df_num[:10])
+    df_num.rename(columns={0: label},
+                  inplace=True)
+    df[label] = df_num
+    print(label, ": \n", df[label][:10])
 
 
 for c in CATEGORICAL_COLUMNS:
     transform_fn(c)
 
+print(df[:10])
+
+
 x = df[properties]
 y = df['survived']
 
-print(x)
-
-x_np = np.asarray(x, np.float32)
-y_np = np.asarray(y, np.float32)
+x_np = np.asarray(x, dtype=np.float32)
+y_np = np.asarray(y, dtype=np.float32)
 
 x_train, x_test, y_train, y_test = train_test_split(x_np, y_np, test_size=0.3, random_state=0)
 
 model = keras.Sequential([
-    keras.layers.Flatten(input_shape=(6,)),
+    keras.layers.Flatten(input_shape=(9,)),
     keras.layers.Dense(16, activation=tf.nn.relu),
     keras.layers.Dense(16, activation=tf.nn.relu),
     keras.layers.Dense(1, activation=tf.nn.sigmoid),
@@ -60,11 +59,11 @@ model.fit(x_train, y_train, epochs=50, batch_size=1)
 test_loss, test_acc = model.evaluate(x_test, y_test)
 print('Test accuracy: ', test_acc)
 
-a = np.array([[1, 33.0, 0, 0, 7.8958, 0]])
-b = np.array([[0, 24.0, 1, 0, 15.85, 1]])
-
-print("prediction 1: ", model.predict(a))
-print("prediction 2: ", model.predict(b))
+# a = np.array([[1, 33.0, 0, 0, 7.8958, 0]])
+# b = np.array([[0, 24.0, 1, 0, 15.85, 1]])
+#
+# print("prediction 1: ", model.predict(a))
+# print("prediction 2: ", model.predict(b))
 
 df_train_normed_summary = x_train[:100]
 explainer = shap.KernelExplainer(model.predict, df_train_normed_summary)

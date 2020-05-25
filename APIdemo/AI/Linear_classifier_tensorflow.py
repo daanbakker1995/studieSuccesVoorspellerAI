@@ -72,6 +72,6 @@ def get_ai_results(student_id):
     #print("Prediction", result[99]['probabilities'][1])
 
     if 0 <= student_id < len(result):
-        return str(result[student_id]['probabilities'][1])
+        return float(str(result[student_id]['probabilities'][1])) * 100
     else:
         return None

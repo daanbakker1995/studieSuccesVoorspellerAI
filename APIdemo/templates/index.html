@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Studiesuccesvoorspeller Flask API</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        thead {
+            font-weight: bold;
+        }
+
+        thead tr td {
+            padding-bottom: 10px;
+        }
+
+        tbody tr td {
+            padding: 10px;
+        }
+
+        tbody tr:nth-child(odd) td {
+            background-color: #f5f5f5;
+        }
+
+        tbody tr:nth-child(even) td {
+            background-color: #efefef;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome to the Studiesuccesvoorspeller Flask API</h1>
+<p>Refer to the list below for all available endpoints.</p>
+<br>
+<table>
+    <thead>
+    <tr>
+        <td>Method</td>
+        <td>Path</td>
+        <td>Query parameters</td>
+        <td>Request body</td>
+        <td>Response body</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>GET</td>
+        <td>/api/v1/prediction</td>
+        <td>?id={INT_ID_OF_THE_STUDENT}</td>
+        <td>-</td>
+        <td>
+            application/json
+            <br>
+            <br>
+            <pre>
+On success (200),
+the response JSON will contain
+an integer which stands for the
+success percentage of the student:
+
+{
+    "prediction": {SUCCESS_PERCENTAGE}
+}
+
+On an error (3**, 4**, 5**), the response
+JSON will contain an error message:
+
+{
+    "error": "{ERROR MESSAGE}"
+}
+            </pre>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

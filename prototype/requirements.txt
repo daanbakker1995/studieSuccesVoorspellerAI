@@ -6,3 +6,4 @@ scikit-learn
 tensorflow
 pandas
 matplotlib
+tensorboard

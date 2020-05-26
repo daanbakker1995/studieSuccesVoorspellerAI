@@ -7,14 +7,34 @@ from sklearn.model_selection import train_test_split
 import shap
 
 label_encoder = LabelEncoder()
-CATEGORICAL_COLUMNS = ['sex', 'class', 'deck', 'embark_town', 'alone']
-NUMERIC_COLUMNS = ['age', 'n_siblings_spouses', 'parch', 'fare']
 
-df = pd.read_csv('https://storage.googleapis.com/tf-datasets/titanic/train.csv')
+# CATEGORICAL_COLUMNS = ['sex', 'class', 'deck', 'embark_town', 'alone']
+# NUMERIC_COLUMNS = ['age', 'n_siblings_spouses', 'parch', 'fare']
+# df = pd.read_csv('https://storage.googleapis.com/tf-datasets/titanic/train.csv')
+#
+# properties = list(df.columns.values)
+# properties.remove('survived')
+
+# prs_PersoonsID[0] is seen as useless datatype since it is unique.
+CATEGORICAL_COLUMNS = ['pcp_Regio', 'isc_OpleidingsCode', 'Geslacht', 'VoorOpleidingsNiveau']
+NUMERIC_COLUMNS = ['AfstandSchool', 'LeeftijdMaandenEersteInschr', 'NrStdInEersteKlas',
+                   'AantalOplVOORICAIngeschreven', 'Aanwezigheid1ejaar', 'EersteToetsCijfer',
+                   'GemToetsCijferEerstePeriode']
+df = pd.read_csv('data.csv')
+
 properties = list(df.columns.values)
-properties.remove('survived')
-print(properties)
-print(df)
+properties.remove('prs_PersoonsID')
+properties.remove('isc_VanDatum')
+properties.remove('PCertificaat_Opl')
+properties.remove('PropCertificaatDatum')
+
+properties.remove('HeeftWisInVooropleiding')
+properties.remove('HeeftBijzOmstandigheden')
+# properties.remove('')
+# properties.remove('')
+# properties.remove('')
+
+properties.remove('HeeftP')
 
 
 def transform_fn(label):
@@ -34,9 +54,9 @@ for c in CATEGORICAL_COLUMNS:
 
 print(df[:10])
 
-
 x = df[properties]
-y = df['survived']
+# y = df['survived']
+y = df['HeeftP']
 
 x_np = np.asarray(x, dtype=np.float32)
 y_np = np.asarray(y, dtype=np.float32)
@@ -44,7 +64,8 @@ y_np = np.asarray(y, dtype=np.float32)
 x_train, x_test, y_train, y_test = train_test_split(x_np, y_np, test_size=0.3, random_state=0)
 
 model = keras.Sequential([
-    keras.layers.Flatten(input_shape=(9,)),
+    keras.layers.Flatten(input_shape=(11,)),
+    # keras.layers.Flatten(input_shape=(9,)),
     keras.layers.Dense(16, activation=tf.nn.relu),
     keras.layers.Dense(16, activation=tf.nn.relu),
     keras.layers.Dense(1, activation=tf.nn.sigmoid),

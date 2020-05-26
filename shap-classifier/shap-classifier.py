@@ -8,13 +8,6 @@ import shap
 
 label_encoder = LabelEncoder()
 
-# CATEGORICAL_COLUMNS = ['sex', 'class', 'deck', 'embark_town', 'alone']
-# NUMERIC_COLUMNS = ['age', 'n_siblings_spouses', 'parch', 'fare']
-# df = pd.read_csv('https://storage.googleapis.com/tf-datasets/titanic/train.csv')
-#
-# properties = list(df.columns.values)
-# properties.remove('survived')
-
 # prs_PersoonsID[0] is seen as useless datatype since it is unique.
 CATEGORICAL_COLUMNS = ['pcp_Regio', 'isc_OpleidingsCode', 'Geslacht', 'VoorOpleidingsNiveau']
 NUMERIC_COLUMNS = ['AfstandSchool', 'LeeftijdMaandenEersteInschr', 'NrStdInEersteKlas',
@@ -30,9 +23,6 @@ properties.remove('PropCertificaatDatum')
 
 properties.remove('HeeftWisInVooropleiding')
 properties.remove('HeeftBijzOmstandigheden')
-# properties.remove('')
-# properties.remove('')
-# properties.remove('')
 
 properties.remove('HeeftP')
 
@@ -55,7 +45,6 @@ for c in CATEGORICAL_COLUMNS:
 print(df[:10])
 
 x = df[properties]
-# y = df['survived']
 y = df['HeeftP']
 
 x_np = np.asarray(x, dtype=np.float32)
@@ -65,7 +54,6 @@ x_train, x_test, y_train, y_test = train_test_split(x_np, y_np, test_size=0.3, r
 
 model = keras.Sequential([
     keras.layers.Flatten(input_shape=(11,)),
-    # keras.layers.Flatten(input_shape=(9,)),
     keras.layers.Dense(16, activation=tf.nn.relu),
     keras.layers.Dense(16, activation=tf.nn.relu),
     keras.layers.Dense(1, activation=tf.nn.sigmoid),
@@ -79,12 +67,6 @@ model.fit(x_train, y_train, epochs=50, batch_size=1)
 
 test_loss, test_acc = model.evaluate(x_test, y_test)
 print('Test accuracy: ', test_acc)
-
-# a = np.array([[1, 33.0, 0, 0, 7.8958, 0]])
-# b = np.array([[0, 24.0, 1, 0, 15.85, 1]])
-#
-# print("prediction 1: ", model.predict(a))
-# print("prediction 2: ", model.predict(b))
 
 df_train_normed_summary = x_train[:100]
 explainer = shap.KernelExplainer(model.predict, df_train_normed_summary)

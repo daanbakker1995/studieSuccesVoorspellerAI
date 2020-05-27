@@ -14,11 +14,14 @@ CATEGORICAL_COLUMNS = ['pcp_Regio', 'isc_OpleidingsCode', 'Geslacht', 'VoorOplei
 NUMERIC_COLUMNS = ['AfstandSchool', 'LeeftijdMaandenEersteInschr', 'NrStdInEersteKlas',
                    'AantalOplVOORICAIngeschreven', 'Aanwezigheid1ejaar', 'EersteToetsCijfer',
                    'GemToetsCijferEerstePeriode']
+
+# data.csv has old full date. Others changed to year.
 df = pd.read_csv('data.csv')
+# df = pd.read_csv('data_csv - STUDENTS_CMD.csv')
+# df = pd.read_csv('data_csv - STUDENTS_ICT.csv')
 
 properties = list(df.columns.values)
 properties.remove('prs_PersoonsID')
-properties.remove('isc_VanDatum')
 properties.remove('PCertificaat_Opl')
 properties.remove('PropCertificaatDatum')
 
@@ -57,7 +60,7 @@ log_dir = ".\\tensorflow_logs\\test\\" + datetime.now().strftime("%Y%m%d-%H%M%S"
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
 
 model = keras.Sequential([
-    keras.layers.Flatten(input_shape=(11,)),
+    keras.layers.Flatten(input_shape=(len(properties),)),
     keras.layers.Dense(16, activation=tf.nn.relu),
     keras.layers.Dense(16, activation=tf.nn.relu),
     keras.layers.Dense(1, activation=tf.nn.sigmoid),
@@ -75,7 +78,7 @@ model.fit(x_train, y_train, epochs=50, batch_size=1,
 test_loss, test_acc = model.evaluate(x_test, y_test)
 print('Test accuracy: ', test_acc)
 
-df_train_normed_summary = x_train[:100]
+df_train_normed_summary = x_train[:10]
 explainer = shap.KernelExplainer(model.predict, df_train_normed_summary)
 shap_values = explainer.shap_values(df_train_normed_summary)
-shap.summary_plot(shap_values[0], df_train_normed_summary, properties, plot_type="bar")
+shap.summary_plot(shap_values[0], df_train_normed_summary, properties)

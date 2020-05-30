@@ -32,21 +32,15 @@ properties.remove('HeeftP')
 
 
 def transform_fn(label):
-    print(label, ": \n", df[label][:10])
     vec = label_encoder.fit_transform(df[label])
-    print(label, ": \n", vec[:10])
     df_num = pd.DataFrame(vec)
-    print(label, ": \n", df_num[:10])
     df_num.rename(columns={0: label},
                   inplace=True)
     df[label] = df_num
-    print(label, ": \n", df[label][:10])
 
 
 for c in CATEGORICAL_COLUMNS:
     transform_fn(c)
-
-print(df[:10])
 
 x = df[properties]
 y = df['HeeftP']
@@ -54,7 +48,7 @@ y = df['HeeftP']
 x_np = np.asarray(x, dtype=np.float32)
 y_np = np.asarray(y, dtype=np.float32)
 
-x_train, x_test, y_train, y_test = train_test_split(x_np, y_np, test_size=0.3, random_state=0)
+x_train, x_test, y_train, y_test = train_test_split(x_np, y_np, test_size=0.3, random_state=0, shuffle=True)
 
 log_dir = ".\\tensorflow_logs\\test\\" + datetime.now().strftime("%Y%m%d-%H%M%S")
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
@@ -78,7 +72,7 @@ model.fit(x_train, y_train, epochs=50, batch_size=1,
 test_loss, test_acc = model.evaluate(x_test, y_test)
 print('Test accuracy: ', test_acc)
 
-df_train_normed_summary = x_train[:10]
+df_train_normed_summary = x_train[:100]
 explainer = shap.KernelExplainer(model.predict, df_train_normed_summary)
 shap_values = explainer.shap_values(df_train_normed_summary)
-shap.summary_plot(shap_values[0], df_train_normed_summary, properties)
+shap.summary_plot(shap_values[0], df_train_normed_summary, properties, plot_type="bar")

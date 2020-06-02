@@ -61,10 +61,6 @@ De dashboards voor Distributies en Histogrammen tonen de verdeling van een Tenso
 Het TensorBoard kan voor ons project van waarde zijn om een goed inzicht te krijgen in de loss en accuratie en zo kunnen we beter nagaan wat het beste werkt voor onze applicatie. 
 TensorBoard werkt met Keras dus er moet wel een model gemaakt worden met Keras wat bovenop TensorFlow werkt.  
 
----
-Verder ben ik nog de What-if tool tegengekomen die je kan gebruiken in TensorBoard deze heb ik niet toegepast maar lijkt me een interessante tooling voor ons project. 
-[https://www.tensorflow.org/tensorboard/what_if_tool](https://www.tensorflow.org/tensorboard/what_if_tool)
-[https://pair-code.github.io/what-if-tool/](https://pair-code.github.io/what-if-tool/)
 
 
 

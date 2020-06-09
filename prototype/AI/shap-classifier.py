@@ -75,4 +75,4 @@ print('Test accuracy: ', test_acc)
 df_train_normed_summary = x_train[:100]
 explainer = shap.KernelExplainer(model.predict, df_train_normed_summary)
 shap_values = explainer.shap_values(df_train_normed_summary)
-shap.summary_plot(shap_values[0], df_train_normed_summary, properties, plot_type="bar")
+shap.summary_plot(shap_values[0], df_train_normed_summary, properties)

@@ -53,8 +53,8 @@
     <tbody>
     <tr>
         <td>GET</td>
-        <td>/api/v1/prediction</td>
-        <td>?id={INT_ID_OF_THE_STUDENT}</td>
+        <td>/api/v1/predictions</td>
+        <td>-</td>
         <td>-</td>
         <td>
             application/json
@@ -63,12 +63,11 @@
             <pre>
 On success (200),
 the response JSON will contain
-an integer which stands for the
-success percentage of the student:
+all predictions for all students:
 
-{
-    "prediction": {SUCCESS_PERCENTAGE}
-}
+[
+    {...}
+]
 
 On an error (3**, 4**, 5**), the response
 JSON will contain an error message:
